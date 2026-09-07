@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Tax Assistant</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,"Noto Sans Thai",sans-serif;
+background:#f4f8fc;
+color:#222;
+}
+
+header{
+background:linear-gradient(135deg,#1769aa,#4facfe);
+color:white;
+text-align:center;
+padding:35px 20px;
+}
+
+header h1{
+margin:0 0 10px;
+font-size:32px;
+}
+
+header p{
+margin:0;
+font-size:17px;
+}
+
+nav{
+background:white;
+text-align:center;
+padding:15px;
+}
+
+nav a{
+display:inline-block;
+padding:10px 18px;
+margin:5px;
+border-radius:20px;
+background:#e8f3ff;
+color:#1769aa;
+text-decoration:none;
+font-weight:bold;
+}
+
+.container{
+max-width:1050px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:25px;
+margin-bottom:25px;
+border-radius:18px;
+box-shadow:0 4px 15px #ddd;
+}
+
+h2{
+color:#1769aa;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+}
+
+.tax{
+background:#eef8ff;
+border:1px solid #d5e9f7;
+border-radius:15px;
+padding:18px;
+text-decoration:none;
+color:#222;
+}
+
+.tax h3{
+color:#1769aa;
+margin-top:0;
+}
+
+.tax p{
+line-height:1.5;
+}
+
+@media(max-width:700px){
+.grid{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:450px){
+.grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🤖 AI Tax Assistant</h1>
+<p>ระบบช่วยคำนวณและให้ความรู้เกี่ยวกับภาษีเบื้องต้นของประเทศไทย</p>
+</header>
+
+<nav>
+<a href="index.html">หน้าแรก</a>
+<a href="#tax">ประเภทภาษี</a>
+<a href="#calculator">คำนวณภาษี</a>
+<a href="#ai">AI ผู้ช่วย</a>
+</nav>
+
+<div class="container">
+
+<section class="card">
+<h2>👋 ยินดีต้อนรับ</h2>
+<p>
+AI Tax Assistant เป็นเว็บไซต์โครงงานสำหรับนักเรียน
+เพื่อให้ความรู้เกี่ยวกับภาษีประเภทต่าง ๆ
+และช่วยคำนวณภาษีเบื้องต้น
+</p>
+<p>เหมาะสำหรับการศึกษา ไม่ใช่เครื่องมือสำหรับยื่นภาษีจริง</p>
+</section>
+
+<section class="card" id="tax">
+<h2>📚 ประเภทภาษีที่รองรับ</h2>
+
+<div class="grid">
+
+<a class="tax" href="persona.html">
+<h3>👤 ภาษีเงินได้บุคคลธรรมดา</h3>
+<p>ภาษีสำหรับบุคคลที่มีรายได้ เช่น เงินเดือนหรือค่าจ้าง</p>
+</a>
+
+<a class="tax" href="corporate.html">
+<h3>🏢 ภาษีเงินได้นิติบุคคล</h3>
+<p>ภาษีสำหรับบริษัทและห้างหุ้นส่วนนิติบุคคล</p>
+</a>
+
+<a class="tax" href="vat.html">
+<h3>🧾 ภาษีมูลค่าเพิ่ม (VAT)</h3>
+<p>ภาษีที่เกี่ยวข้องกับการขายสินค้าและการให้บริการ</p>
+</a>
+
+<a class="tax" href="business.html">
+<h3>💼 ภาษีธุรกิจเฉพาะ</h3>
+<p>ภาษีสำหรับกิจการบางประเภทตามที่กฎหมายกำหนด</p>
+</a>
+
+<a class="tax" href="stamp.html">
+<h3>📜 อากรแสตมป์</h3>
+<p>อากรที่เรียกเก็บจากตราสารหรือเอกสารบางประเภท</p>
+</a>
+
+<a class="tax" href="property.html">
+<h3>🏠 ภาษีที่ดินและสิ่งปลูกสร้าง</h3>
+<p>ภาษีที่เกี่ยวข้องกับการถือครองที่ดินและสิ่งปลูกสร้าง</p>
+</a>
+
+<a class="tax" href="signboard.html">
+<h3>🪧 ภาษีป้าย</h3>
+<p>ภาษีสำหรับป้ายที่ใช้ประกอบการค้าหรือกิจการ</p>
+</a>
+
+</div>
+</section>
+
+<section class="card" id="calculator">
+
+    <h2>🧮 คำนวณภาษีเงินได้เบื้องต้น</h2>
+
+    <p>กรอกข้อมูลเพื่อประมาณการรายได้สุทธิ</p>
+
+    <label>ชื่อผู้ใช้งาน</label>
+    <input id="name" type="text" placeholder="กรอกชื่อ">
+
+    <label>รายได้ต่อปี (บาท)</label>
+    <input id="income" type="number" placeholder="เช่น 300000">
+
+    <label>ค่าลดหย่อนรวม (บาท)</label>
+    <input id="deduct" type="number" placeholder="เช่น 60000">
+
+    <div>
+    <button onclick="calculateTax()">คำนวณภาษี</button>
+    <button onclick="clearForm()">ล้างข้อมูล</button>
+    </div>
+
+    <div id="result" class="result">
+    <h3>📊 ผลการคำนวณ</h3>
+
+    <p id="rName"></p>
+    <p id="rIncome"></p>
+    <p id="rDeduct"></p>
+    <p id="rNet"></p>
+    <p id="rTax"></p>
+    </div>
+
+    </section>
+
+    <section class="card" id="ai">
+
+    <h2>🤖 AI ผู้ช่วยด้านภาษี</h2>
+
+    <p>
+    ระบบ AI ช่วยอธิบายผลการคำนวณในรูปแบบที่เข้าใจง่าย
+    เหมาะสำหรับการเรียนรู้เบื้องต้น
+    </p>
+
+    <p id="aiText">
+    💡 ลองกรอกข้อมูลด้านบนแล้วกด "คำนวณภาษี"
+    ระบบจะแสดงคำแนะนำให้
+    </p>
+
+    </section>
+
+    </div>
+
+    <footer>
+    <p>AI Tax Assistant | โครงงานระดับชั้นมัธยมศึกษาปีที่ 5</p>
+    </footer>
+
+    <style>
+    label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+    }
+
+    input{
+    width:100%;
+    padding:14px;
+    margin-top:6px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:16px;
+    }
+
+    button{
+    margin-top:18px;
+    padding:13px 20px;
+    border:0;
+    border-radius:10px;
+    background:#1769aa;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    }
+
+    .result{
+    display:none;
+    margin-top:20px;
+    padding:20px;
+    background:#eaf8ef;
+    border-left:5px solid #35a66f;
+    border-radius:12px;
+    }
+
+    .result h3{
+    color:#1769aa;
+    }
+
+    footer{
+    background:#1769aa;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:20px;
+    }
+    </style>
+
+    <script>
+    function calculateTax(){
+
+    let name=document.getElementById("name").value.trim();
+    let income=Number(document.getElementById("income").value);
+    let deduct=Number(document.getElementById("deduct").value);
+
+    if(name==="" || income<0 || deduct<0){
+    alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+    return;
+    }
+
+    let net=income-deduct;
+    if(net<0) net=0;
+
+    let tax=0;
+
+    if(net<=150000){
+    tax=0;
+    }else if(net<=300000){
+    tax=(net-150000)*0.05;
+    }else if(net<=500000){
+    tax=7500+(net-300000)*0.10;
+    }else if(net<=750000){
+    tax=27500+(net-500000)*0.15;
+    }else if(net<=1000000){
+    tax=65000+(net-750000)*0.20;
+    }else{
+    tax=115000+(net-1000000)*0.25;
+    }
+
+    document.getElementById("rName").textContent="ชื่อ: "+name;
+    document.getElementById("rIncome").textContent=
+    "รายได้ต่อปี: "+income.toLocaleString()+" บาท";
+    document.getElementById("rDeduct").textContent=
+    "ค่าลดหย่อน: "+deduct.toLocaleString()+" บาท";
+    document.getElementById("rNet").textContent=
+    "รายได้สุทธิ: "+net.toLocaleString()+" บาท";
+    document.getElementById("rTax").textContent=
+    "ภาษีโดยประมาณ: "+tax.toLocaleString()+" บาท";
+
+    document.getElementById("result").style.display="block";
+
+    document.getElementById("aiText").textContent=
+    "🤖 AI แนะนำ: ผลลัพธ์นี้เป็นการประมาณเพื่อการศึกษา ควรตรวจสอบสิทธิ์ลดหย่อนและอัตราภาษีล่าสุดก่อนใช้งานจริง";
+    }
+
+    function clearForm(){
+
+    document.getElementById("name").value="";
+    document.getElementById("income").value="";
+    document.getElementById("deduct").value="";
+    document.getElementById("result").style.display="none";
+
+    document.getElementById("aiText").textContent=
+    "💡 ลองกรอกข้อมูลด้านบนแล้วกด \"คำนวณภาษี\" ระบบจะแสดงคำแนะนำให้";
+    }
+    </script>
+
+    </body>
+    </html>

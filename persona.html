@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>ภาษีเงินได้บุคคลธรรมดา</title>
+                <link rel="stylesheet" href="style.css">
+                </head>
+
+                <body>
+
+                <header>
+                    <h1>ภาษีเงินได้บุคคลธรรมดา</h1>
+                        <p>AI Tax Assistant - ระบบคำนวณภาษีเบื้องต้น</p>
+                        </header>
+
+                        <nav>
+                            <a href="index.html">หน้าแรก</a>
+                                <a href="persona.html">บุคคลธรรมดา</a>
+                                    <a href="corporate.html">นิติบุคคล</a>
+                                        <a href="vat.html">VAT</a>
+                                            <a href="business.html">ธุรกิจเฉพาะ</a>
+                                            </nav>
+
+                                            <section>
+
+                                                <h2>🧮 คำนวณภาษีเบื้องต้น</h2>
+
+                                                    <label>ชื่อผู้ใช้งาน</label>
+                                                        <input type="text" id="fullname" placeholder="กรอกชื่อของคุณ">
+
+                                                            <label>รายได้ต่อปี (บาท)</label>
+                                                                <input type="number" id="income" placeholder="เช่น 500000">
+
+                                                                    <label>ค่าลดหย่อน (บาท)</label>
+                                                                        <input type="number" id="allowance" placeholder="เช่น 100000">
+
+                                                                            <button onclick="calculateTax()">คำนวณภาษี</button>
+
+                                                                                <div id="result">
+                                                                                        กรุณากรอกข้อมูลแล้วกดปุ่มคำนวณ
+                                                                                            </div>
+
+                                                                                            </section>
+
+                                                                                            <script src="script.js"></script>
+
+                                                                                            </body>
+                                                                                            </html>
