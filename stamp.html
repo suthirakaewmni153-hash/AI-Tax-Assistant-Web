@@ -3,20 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ภาษีป้าย | AI Tax Assistant</title>
+
+<title>อากรแสตมป์ | AI Tax Assistant</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
   font-family:Arial,"Noto Sans Thai",sans-serif;
-  background:linear-gradient(135deg,#fff7ed,#fef3c7);
-  color:#3b2a1a;
+  background:linear-gradient(135deg,#f5f7ff,#eef2ff);
+  color:#263238;
 }
 
 header{
-  background:linear-gradient(135deg,#d97706,#f59e0b);
+  background:linear-gradient(135deg,#5b5bd6,#7c4dff);
   color:white;
   text-align:center;
   padding:32px 20px;
@@ -29,6 +32,30 @@ header h1{
 
 header p{
   margin:0;
+  font-size:16px;
+}
+
+nav{
+  background:white;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:14px 10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+nav a{
+  text-decoration:none;
+  color:#333;
+  padding:9px 13px;
+  border-radius:20px;
+  font-size:14px;
+}
+
+nav a:hover{
+  background:#eeeaff;
+  color:#5b5bd6;
 }
 
 .container{
@@ -41,12 +68,13 @@ header p{
   background:white;
   border-radius:18px;
   padding:28px;
-  box-shadow:0 8px 25px rgba(0,0,0,.08);
+  box-shadow:0 8px 25px rgba(0,0,0,.10);
 }
 
-h2{
+.card h2{
   margin-top:0;
-  color:#c26100;
+  color:#5b5bd6;
+  text-align:center;
 }
 
 label{
@@ -59,9 +87,10 @@ label{
 input,select{
   width:100%;
   padding:13px;
-  border:1px solid #ddd0bd;
+  border:1px solid #d5d8e5;
   border-radius:10px;
   font-size:16px;
+  background:white;
 }
 
 button{
@@ -70,7 +99,7 @@ button{
   padding:14px;
   border:0;
   border-radius:10px;
-  background:#d97706;
+  background:linear-gradient(135deg,#5b5bd6,#7c4dff);
   color:white;
   font-size:17px;
   font-weight:bold;
@@ -78,45 +107,65 @@ button{
 }
 
 button:hover{
-  background:#b45309;
+  opacity:.9;
 }
 
 .result{
-  display:none;
   margin-top:22px;
-  padding:20px;
-  background:#fff7ed;
+  padding:18px;
+  background:#f1efff;
   border-radius:12px;
-  line-height:1.7;
+  text-align:center;
+  display:none;
 }
 
-.result strong{
-  color:#c26100;
-  font-size:22px;
-}
-
-.info{
-  margin-top:22px;
-  padding:16px;
-  background:#fff8e6;
-  border-left:5px solid #f59e0b;
-  border-radius:8px;
-  line-height:1.7;
-}
-
-.back{
-  display:inline-block;
-  margin-top:20px;
-  color:#b45309;
-  text-decoration:none;
+.result .amount{
+  font-size:28px;
   font-weight:bold;
+  color:#5b5bd6;
+  margin-top:8px;
+}
+
+.note{
+  margin-top:22px;
+  padding:15px;
+  background:#fff8e1;
+  border-left:5px solid #ffb300;
+  border-radius:8px;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.source{
+  margin-top:18px;
+  text-align:center;
+  font-size:13px;
+}
+
+.source a{
+  color:#5b5bd6;
 }
 
 footer{
   text-align:center;
-  padding:25px;
-  color:#776b5d;
-  font-size:14px;
+  padding:25px 15px;
+  color:#666;
+  font-size:13px;
+}
+
+@media(max-width:600px){
+  header h1{
+    font-size:25px;
+  }
+
+  .card{
+    padding:20px;
+  }
+
+  nav a{
+    font-size:13px;
+    padding:8px 10px;
+  }
 }
 </style>
 </head>
@@ -124,48 +173,87 @@ footer{
 <body>
 
 <header>
-  <h1>🏷️ ภาษีป้าย</h1>
+  <h1>📜 อากรแสตมป์</h1>
   <p>AI Tax Assistant • เครื่องมือคำนวณเบื้องต้นเพื่อการศึกษา</p>
 </header>
 
+<nav>
+  <a href="index.html">หน้าแรก</a>
+  <a href="persona.html">บุคคลธรรมดา</a>
+  <a href="corporate.html">นิติบุคคล</a>
+  <a href="vat.html">VAT</a>
+  <a href="business.html">ธุรกิจ</a>
+  <a href="property.html">ทรัพย์สิน</a>
+  <a href="stamp.html">อากรแสตมป์</a>
+  <a href="signboard.html">ภาษีป้าย</a>
+</nav>
+
 <div class="container">
+
   <div class="card">
 
-    <h2>คำนวณภาษีป้ายเบื้องต้น</h2>
+    <h2>เครื่องคำนวณอากรแสตมป์</h2>
 
-    <label for="area">พื้นที่ป้าย (ตารางเซนติเมตร)</label>
+    <label for="amount">จำนวนเงิน / มูลค่าที่ใช้คำนวณ (บาท)</label>
+
     <input
       type="number"
-      id="area"
+      id="amount"
       min="0"
-      placeholder="เช่น 1000"
+      step="0.01"
+      placeholder="เช่น 100000"
     >
 
-    <label for="type">ประเภทป้าย</label>
+    <label for="type">เลือกประเภทตราสาร</label>
+
     <select id="type">
-      <option value="thai">ป้ายอักษรไทย</option>
-      <option value="mixed">ป้ายอักษรไทย + ภาษาต่างประเทศ</option>
-      <option value="foreign">ป้ายอักษรต่างประเทศ</option>
+      <option value="lease">
+        เช่าที่ดิน/อาคาร — 1 บาทต่อ 1,000 บาท
+      </option>
+
+      <option value="hirepurchase">
+        เช่าซื้อทรัพย์สิน — 1 บาทต่อ 1,000 บาท
+      </option>
+
+      <option value="hirework">
+        จ้างทำของ — 1 บาทต่อ 1,000 บาท
+      </option>
+
+      <option value="loan">
+        กู้ยืมเงิน — 1 บาทต่อ 2,000 บาท (สูงสุด 10,000 บาท)
+      </option>
+
+      <option value="receipt">
+        ใบรับบางกรณี — 1 บาทต่อ 200 บาท
+      </option>
     </select>
 
-    <button onclick="calculateSignTax()">
-      🧮 คำนวณภาษี
+    <button onclick="calculateStampDuty()">
+      🧮 คำนวณอากรแสตมป์
     </button>
 
-    <div class="result" id="result"></div>
-
-    <div class="info">
-      <strong>หมายเหตุ</strong><br>
-      ผลลัพธ์นี้เป็นการประมาณเพื่อการศึกษาเท่านั้น
-      การคำนวณภาษีป้ายจริงต้องพิจารณาหลักเกณฑ์
-      ขนาด ลักษณะ และข้อความบนป้ายตามกฎหมายที่เกี่ยวข้อง
+    <div class="result" id="result">
+      <div>อากรแสตมป์โดยประมาณ</div>
+      <div class="amount" id="taxResult">0 บาท</div>
     </div>
 
-    <a class="back" href="index.html">
-      ← กลับหน้าหลัก AI Tax Assistant
-    </a>
+    <div class="note">
+      <strong>หมายเหตุ</strong><br>
+      เครื่องมือนี้จัดทำขึ้นเพื่อการศึกษาและประมาณการเบื้องต้น
+      อัตราอากรแสตมป์จริงขึ้นอยู่กับลักษณะของตราสาร
+      เงื่อนไข และข้อยกเว้นตามกฎหมาย
+      ไม่ควรใช้แทนการตรวจสอบหรือยื่นภาษีจริง
+    </div>
+
+    <div class="source">
+      ข้อมูลอ้างอิง:
+      <a href="https://www.rd.go.th/6162.html" target="_blank">
+        กรมสรรพากร - บัญชีอากรแสตมป์
+      </a>
+    </div>
 
   </div>
+
 </div>
 
 <footer>
@@ -173,43 +261,57 @@ footer{
 </footer>
 
 <script>
-function calculateSignTax(){
+function calculateStampDuty(){
 
-  const area = Number(document.getElementById("area").value);
-  const type = document.getElementById("type").value;
-  const result = document.getElementById("result");
+  const amount = parseFloat(
+    document.getElementById("amount").value
+  );
 
-  if(!area || area <= 0){
-    result.style.display="block";
-    result.innerHTML="⚠️ กรุณากรอกพื้นที่ป้ายให้ถูกต้อง";
+  const type =
+    document.getElementById("type").value;
+
+  const result =
+    document.getElementById("result");
+
+  const taxResult =
+    document.getElementById("taxResult");
+
+  if(isNaN(amount) || amount <= 0){
+    alert("กรุณากรอกจำนวนเงินให้ถูกต้อง");
     return;
   }
 
-  let rate = 0.003;
+  let tax = 0;
 
-  if(type === "mixed"){
-    rate = 0.005;
+  if(
+    type === "lease" ||
+    type === "hirepurchase" ||
+    type === "hirework"
+  ){
+
+    tax = Math.ceil(amount / 1000);
+
+  }else if(type === "loan"){
+
+    tax = Math.ceil(amount / 2000);
+
+    if(tax > 10000){
+      tax = 10000;
+    }
+
+  }else if(type === "receipt"){
+
+    tax = Math.ceil(amount / 200);
+
   }
 
-  if(type === "foreign"){
-    rate = 0.007;
-  }
-
-  const tax = area * rate;
-
-  result.style.display="block";
-
-  result.innerHTML =
-    "💰 ภาษีป้ายโดยประมาณ<br><br>" +
-    "<strong>" +
+  taxResult.textContent =
     tax.toLocaleString("th-TH",{
       minimumFractionDigits:2,
       maximumFractionDigits:2
-    }) +
-    " บาท</strong><br><br>" +
-    "พื้นที่ป้าย: " +
-    area.toLocaleString("th-TH") +
-    " ตารางเซนติเมตร";
+    }) + " บาท";
+
+  result.style.display = "block";
 }
 </script>
 
