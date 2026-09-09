@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ภาษีธุรกิจ | AI Tax Assistant</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, "Noto Sans Thai", sans-serif;
+  background: #f5f7fb;
+  color: #222;
+}
+
+header {
+  background: #173b7a;
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+header h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+}
+
+header p {
+  margin: 0;
+  font-size: 16px;
+}
+
+nav {
+  background: white;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+nav a {
+  display: inline-block;
+  margin: 5px 12px;
+  color: #173b7a;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.container {
+  max-width: 800px;
+  margin: 35px auto;
+  padding: 0 20px;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 5px 20px rgba(0,0,0,.08);
+}
+
+h2 {
+  color: #173b7a;
+}
+
+label {
+  display: block;
+  margin-top: 18px;
+  margin-bottom: 7px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  margin-top: 25px;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background: #173b7a;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: .9;
+}
+
+.result {
+  margin-top: 25px;
+  padding: 22px;
+  background: #f1f5ff;
+  border-radius: 12px;
+  line-height: 1.8;
+}
+
+.tax {
+  font-size: 26px;
+  font-weight: bold;
+  color: #173b7a;
+}
+
+.note {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #666;
+}
+
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 26px;
+  }
+
+  nav a {
+    margin: 5px 7px;
+  }
+
+  .card {
+    padding: 22px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>ภาษีธุรกิจ</h1>
+  <p>AI Tax Assistant - ระบบช่วยเรียนรู้ภาษีเบื้องต้น</p>
+</header>
+
+<nav>
+  <a href="index.html">หน้าหลัก</a>
+  <a href="persona.html">บุคคลธรรมดา</a>
+  <a href="corporate.html">นิติบุคคล</a>
+  <a href="vat.html">VAT</a>
+  <a href="business.html">ธุรกิจ</a>
+</nav>
+
+<div class="container">
+
+  <div class="card">
+
+    <h2>🧮 เครื่องคำนวณภาษีธุรกิจเบื้องต้น</h2>
+
+    <p>
+      ใช้สำหรับประมาณการภาษีจากกำไรสุทธิของกิจการ
+    </p>
+
+    <label for="profit">กำไรสุทธิ (บาท)</label>
+
+    <input
+      type="number"
+      id="profit"
+      placeholder="เช่น 500000"
+      min="0"
+    >
+
+    <button onclick="calculateBusinessTax()">
+      คำนวณภาษี
+    </button>
+
+    <div id="result" class="result">
+      กรุณากรอกกำไรสุทธิ แล้วกดปุ่มคำนวณ
+    </div>
+
+    <div class="note">
+      * เครื่องมือนี้จัดทำขึ้นเพื่อการศึกษาและการประมาณการเบื้องต้น
+      ไม่ใช่เครื่องมือสำหรับยื่นภาษีจริง
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function calculateBusinessTax() {
+
+  const profit = Number(document.getElementById("profit").value);
+  const result = document.getElementById("result");
+
+  if (!profit || profit < 0) {
+    result.innerHTML =
+      "⚠️ กรุณากรอกกำไรสุทธิเป็นจำนวนเงินที่ถูกต้อง";
+    return;
+  }
+
+  // อัตราสมมติสำหรับเครื่องมือการศึกษา
+  let rate = 0.20;
+
+  const tax = profit * rate;
+  const total = profit - tax;
+
+  result.innerHTML = `
+    <h3>ผลการคำนวณ</h3>
+
+    <p>กำไรสุทธิ:
+      <strong>${profit.toLocaleString('th-TH')} บาท</strong>
+    </p>
+
+    <p>อัตราภาษีที่ใช้ประมาณการ:
+      <strong>20%</strong>
+    </p>
+
+    <p class="tax">
+      ภาษีโดยประมาณ:
+      ${tax.toLocaleString('th-TH', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })} บาท
+    </p>
+
+    <p>
+      กำไรหลังหักภาษีโดยประมาณ:
+      <strong>${total.toLocaleString('th-TH', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })} บาท</strong>
+    </p>
+  `;
+}
+</script>
+
+</body>
+</html>
