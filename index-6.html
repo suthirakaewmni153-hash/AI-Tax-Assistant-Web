@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Tax Assistant | ผู้ช่วยเรียนรู้ภาษี</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap');
+
+:root{
+  --primary:#1769aa;
+  --secondary:#4facfe;
+  --dark:#12324a;
+  --bg:#f4f8fc;
+  --card:#ffffff;
+  --text:#1f2937;
+  --muted:#64748b;
+  --border:#dbe7f0;
+}
+*{box-sizing:border-box;scroll-behavior:smooth}
+body{
+  margin:0;font-family:"Prompt","Noto Sans Thai",Arial,sans-serif;
+  background:linear-gradient(180deg,#eef7ff 0,#f7fbff 360px,var(--bg) 100%);
+  color:var(--text);
+}
+header{
+  color:#fff;text-align:center;padding:55px 20px 48px;
+  background:linear-gradient(135deg,#0f4c81,#1769aa 50%,#4facfe);
+  position:relative;overflow:hidden;
+}
+header:before,header:after{
+  content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.10);
+}
+header:before{width:240px;height:240px;left:-90px;top:-100px}
+header:after{width:320px;height:320px;right:-130px;bottom:-180px}
+.logo{font-size:54px;position:relative;z-index:1}
+header h1{margin:8px 0 8px;font-size:clamp(30px,6vw,48px);position:relative;z-index:1}
+header p{margin:0 auto;max-width:720px;font-size:17px;opacity:.95;position:relative;z-index:1}
+.badge{
+  display:inline-block;margin-top:18px;padding:7px 14px;border-radius:999px;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);
+  font-size:13px;position:relative;z-index:1
+}
+nav{
+  position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--border);
+  display:flex;justify-content:center;flex-wrap:wrap;gap:6px;padding:10px 12px;
+}
+nav a{color:var(--dark);text-decoration:none;font-weight:600;padding:9px 13px;border-radius:12px}
+nav a:hover{background:#e8f4ff;color:var(--primary)}
+.container{max-width:1120px;margin:auto;padding:25px 18px 45px}
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:22px;
+  padding:28px;margin-bottom:22px;box-shadow:0 8px 25px rgba(18,50,74,.07)
+}
+.hero-card{
+  display:grid;grid-template-columns:1.3fr .7fr;gap:25px;align-items:center
+}
+h2{color:var(--dark);margin-top:0;font-size:26px}
+h3{margin-top:0;color:var(--primary)}
+.muted{color:var(--muted);line-height:1.8}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn{
+  display:inline-block;border:0;border-radius:13px;padding:12px 18px;
+  font-family:inherit;font-weight:600;cursor:pointer;text-decoration:none;
+}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--secondary));color:white}
+.btn-light{background:#eaf5ff;color:var(--primary)}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.03)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat{padding:18px;border-radius:17px;background:#f5faff;text-align:center;border:1px solid #e0eef9}
+.stat strong{display:block;font-size:28px;color:var(--primary)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.tax{
+  display:block;text-decoration:none;color:var(--text);background:#f8fcff;
+  border:1px solid #dcecf8;border-radius:17px;padding:19px;transition:.2s
+}
+.tax:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(23,105,170,.12);border-color:#a9d4f3}
+.icon{font-size:31px;margin-bottom:8px}
+.tax h3{font-size:18px;margin:0 0 6px}
+.tax p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label{display:block;font-weight:600;margin-bottom:7px}
+input{
+  width:100%;padding:13px 14px;border:1px solid #cddce8;border-radius:12px;
+  font:inherit;outline:none;background:#fff
+}
+input:focus{border-color:#4facfe;box-shadow:0 0 0 3px rgba(79,172,254,.13)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.result{
+  margin-top:20px;padding:20px;border-radius:17px;background:#f4fbff;
+  border:1px solid #cfe9f8;display:none
+}
+.result.show{display:block}
+.result-row{display:flex;justify-content:space-between;gap:15px;padding:10px 0;border-bottom:1px dashed #c9dce9}
+.result-row:last-child{border-bottom:0}
+.tax-number{font-size:27px;color:var(--primary);font-weight:700}
+.ai-box{
+  display:flex;gap:15px;align-items:flex-start;padding:18px;border-radius:17px;
+  background:linear-gradient(135deg,#eff8ff,#f8fcff);border:1px solid #d6ebfa
+}
+.ai-icon{font-size:35px}
+footer{text-align:center;padding:28px 18px;color:#6b7c8c;font-size:13px}
+.note{font-size:12px;color:#718096;line-height:1.7;margin-top:15px}
+@media(max-width:800px){
+  .hero-card{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  .grid,.form-grid,.stats{grid-template-columns:1fr}
+  .card{padding:21px}nav a{font-size:13px;padding:8px 9px}
+  header{padding:42px 16px}.logo{font-size:44px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🤖</div>
+  <h1>AI Tax Assistant</h1>
+  <p>ผู้ช่วยเรียนรู้เรื่องภาษีไทย พร้อมเครื่องมือคำนวณภาษีเงินได้บุคคลธรรมดาเบื้องต้น</p>
+  <span class="badge">โครงงานระดับชั้นมัธยมศึกษาปีที่ 5 • เพื่อการศึกษา</span>
+</header>
+
+<nav>
+  <a href="#home">หน้าแรก</a>
+  <a href="#tax">ประเภทภาษี</a>
+  <a href="#calculator">คำนวณภาษี</a>
+  <a href="#ai">AI ผู้ช่วย</a>
+</nav>
+
+<main class="container">
+
+<section class="card hero-card" id="home">
+  <div>
+    <h2>👋 ยินดีต้อนรับสู่ AI Tax Assistant</h2>
+    <p class="muted">
+      เว็บไซต์สำหรับเรียนรู้ประเภทภาษีที่สำคัญ และทดลองคำนวณภาษีเงินได้บุคคลธรรมดา
+      แบบง่าย ๆ เหมาะสำหรับใช้ประกอบการเรียนและทำความเข้าใจหลักการเบื้องต้น
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#calculator">🧮 เริ่มคำนวณภาษี</a>
+      <a class="btn btn-light" href="#tax">📚 ดูประเภทภาษี</a>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><strong>7</strong><span>ประเภทภาษี</span></div>
+    <div class="stat"><strong>100%</strong><span>ใช้งานบนมือถือ</span></div>
+    <div class="stat"><strong>ฟรี</strong><span>เพื่อการศึกษา</span></div>
+  </div>
+</section>
+
+<section class="card" id="tax">
+  <h2>📚 ประเภทภาษี</h2>
+  <p class="muted">เลือกหัวข้อที่ต้องการศึกษาได้จากรายการด้านล่าง</p>
+  <div class="grid">
+    <a class="tax" href="persona.html"><div class="icon">👤</div><h3>ภาษีเงินได้บุคคลธรรมดา</h3><p>ภาษีสำหรับบุคคลที่มีเงินได้ เช่น เงินเดือน ค่าจ้าง หรือรายได้จากอาชีพ</p></a>
+    <a class="tax" href="corporate.html"><div class="icon">🏢</div><h3>ภาษีเงินได้นิติบุคคล</h3><p>ภาษีที่เกี่ยวข้องกับบริษัทหรือห้างหุ้นส่วนนิติบุคคล</p></a>
+    <a class="tax" href="vat.html"><div class="icon">🧾</div><h3>ภาษีมูลค่าเพิ่ม (VAT)</h3><p>ภาษีที่เกี่ยวข้องกับการขายสินค้าและการให้บริการ</p></a>
+    <a class="tax" href="business.html"><div class="icon">💼</div><h3>ภาษีธุรกิจเฉพาะ</h3><p>ภาษีสำหรับกิจการบางประเภทตามหลักเกณฑ์ที่กำหนด</p></a>
+    <a class="tax" href="stamp.html"><div class="icon">📜</div><h3>อากรแสตมป์</h3><p>อากรที่เรียกเก็บจากตราสารหรือเอกสารบางประเภท</p></a>
+    <a class="tax" href="property.html"><div class="icon">🏠</div><h3>ภาษีที่ดินและสิ่งปลูกสร้าง</h3><p>ภาษีที่เกี่ยวข้องกับการถือครองที่ดินและสิ่งปลูกสร้าง</p></a>
+    <a class="tax" href="signboard.html"><div class="icon">🪧</div><h3>ภาษีป้าย</h3><p>ภาษีสำหรับป้ายที่ใช้ประกอบการค้าหรือกิจการ</p></a>
+  </div>
+</section>
+
+<section class="card" id="calculator">
+  <h2>🧮 เครื่องคำนวณภาษีเบื้องต้น</h2>
+  <p class="muted">กรอกข้อมูลเพื่อประมาณการ “รายได้สุทธิ” และภาษีตามอัตราก้าวหน้า</p>
+
+  <div class="form-grid">
+    <div>
+      <label for="name">ชื่อผู้ใช้งาน</label>
+      <input id="name" type="text" placeholder="เช่น สุธีรา">
+    </div>
+    <div>
+      <label for="income">รายได้ต่อปี (บาท)</label>
+      <input id="income" type="number" min="0" placeholder="เช่น 300000">
+    </div>
+    <div>
+      <label for="deduct">ค่าลดหย่อนรวม (บาท)</label>
+      <input id="deduct" type="number" min="0" placeholder="เช่น 60000">
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="calculateTax()">🧮 คำนวณภาษี</button>
+    <button class="btn btn-light" onclick="clearForm()">↩ ล้างข้อมูล</button>
+  </div>
+
+  <div id="result" class="result">
+    <h3>📊 ผลการคำนวณ</h3>
+    <div class="result-row"><span>ชื่อผู้ใช้งาน</span><strong id="rName">-</strong></div>
+    <div class="result-row"><span>รายได้ต่อปี</span><strong id="rIncome">-</strong></div>
+    <div class="result-row"><span>ค่าลดหย่อน</span><strong id="rDeduct">-</strong></div>
+    <div class="result-row"><span>รายได้สุทธิ</span><strong id="rNet">-</strong></div>
+    <div class="result-row"><span>ภาษีโดยประมาณ</span><strong id="rTax" class="tax-number">-</strong></div>
+  </div>
+  <p class="note">หมายเหตุ: เครื่องมือนี้เป็นตัวอย่างเพื่อการศึกษา ไม่ใช่เครื่องมือสำหรับยื่นภาษีจริง และไม่ได้ครอบคลุมเงื่อนไขหรือสิทธิประโยชน์ทางภาษีทุกกรณี</p>
+</section>
+
+<section class="card" id="ai">
+  <h2>🤖 AI ผู้ช่วยด้านภาษี</h2>
+  <div class="ai-box">
+    <div class="ai-icon">💡</div>
+    <div>
+      <h3>คำแนะนำอัตโนมัติ</h3>
+      <p id="aiText" class="muted" style="margin:0">
+        ลองกรอกข้อมูลแล้วกด “คำนวณภาษี” ระบบจะแสดงคำอธิบายผลลัพธ์แบบเข้าใจง่าย
+      </p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <strong>AI Tax Assistant</strong><br>
+  เว็บไซต์โครงงานเพื่อการศึกษา • ชั้นมัธยมศึกษาปีที่ 5<br>
+  ข้อมูลเป็นตัวอย่างเบื้องต้น ควรตรวจสอบหลักเกณฑ์ล่าสุดจากหน่วยงานที่เกี่ยวข้องก่อนใช้งานจริง
+</footer>
+
+<script>
+function formatBaht(value){
+  return Number(value).toLocaleString('th-TH',{maximumFractionDigits:2}) + ' บาท';
+}
+
+function progressiveTax(net){
+  let tax = 0;
+  const brackets = [
+    [150000,0],
+    [150000,0.05],
+    [200000,0.10],
+    [250000,0.15],
+    [1000000,0.20],
+    [2000000,0.25],
+    [5000000,0.30],
+    [Infinity,0.35]
+  ];
+  let remaining = Math.max(0,net);
+  for(const [limit,rate] of brackets){
+    if(remaining <= 0) break;
+    const amount = Math.min(remaining,limit);
+    tax += amount * rate;
+    remaining -= amount;
+  }
+  return tax;
+}
+
+function calculateTax(){
+  const name = document.getElementById('name').value.trim() || 'ผู้ใช้งาน';
+  const income = Number(document.getElementById('income').value);
+  const deduct = Number(document.getElementById('deduct').value);
+
+  if(!Number.isFinite(income) || income < 0){
+    alert('กรุณากรอกรายได้ต่อปีให้ถูกต้อง');
+    return;
+  }
+  if(!Number.isFinite(deduct) || deduct < 0){
+    alert('กรุณากรอกค่าลดหย่อนให้ถูกต้อง');
+    return;
+  }
+
+  const net = Math.max(0,income-deduct);
+  const tax = progressiveTax(net);
+
+  document.getElementById('rName').textContent = name;
+  document.getElementById('rIncome').textContent = formatBaht(income);
+  document.getElementById('rDeduct').textContent = formatBaht(deduct);
+  document.getElementById('rNet').textContent = formatBaht(net);
+  document.getElementById('rTax').textContent = formatBaht(tax);
+  document.getElementById('result').classList.add('show');
+
+  let advice = '';
+  if(net <= 150000){
+    advice = 'รายได้สุทธิอยู่ในช่วงเริ่มต้นของตารางอัตราภาษี ตัวอย่างนี้จึงคำนวณภาษีเป็น 0 บาท';
+  }else if(tax <= 10000){
+    advice = 'จากข้อมูลตัวอย่าง ภาษีโดยประมาณอยู่ในระดับไม่สูงมาก แต่การคำนวณจริงอาจมีสิทธิหักลดหย่อนและเงื่อนไขอื่นเพิ่มเติม';
+  }else{
+    advice = 'รายได้สุทธิของคุณอยู่ในช่วงที่มีการคำนวณภาษีหลายขั้น อัตราภาษีเป็นแบบก้าวหน้า จึงไม่ใช่การนำรายได้ทั้งหมดไปคูณด้วยอัตราสูงสุด';
+  }
+  document.getElementById('aiText').textContent = advice + ' 💙';
+  document.getElementById('result').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function clearForm(){
+  document.getElementById('name').value='';
+  document.getElementById('income').value='';
+  document.getElementById('deduct').value='';
+  document.getElementById('result').classList.remove('show');
+  document.getElementById('aiText').textContent='ลองกรอกข้อมูลแล้วกด “คำนวณภาษี” ระบบจะแสดงคำอธิบายผลลัพธ์แบบเข้าใจง่าย';
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth'});}
+  });
+});
+</script>
+</body>
+</html>
