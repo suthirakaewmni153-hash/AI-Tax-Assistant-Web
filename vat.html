@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ภาษีมูลค่าเพิ่ม (VAT) | AI Tax Assistant</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f5f7fb;
+    color: #222;
+}
+
+header {
+    background: #173b7a;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+nav {
+    background: white;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #173b7a;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 700px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+label {
+    display: block;
+    margin-top: 18px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background: #173b7a;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+#result {
+    margin-top: 25px;
+    padding: 20px;
+    background: #eef4ff;
+    border-radius: 10px;
+    line-height: 1.8;
+}
+
+.note {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>ภาษีมูลค่าเพิ่ม (VAT)</h1>
+    <p>AI Tax Assistant - ระบบช่วยเรียนรู้ภาษีเบื้องต้น</p>
+</header>
+
+<nav>
+    <a href="index.html">หน้าหลัก</a>
+    <a href="persona.html">บุคคลธรรมดา</a>
+    <a href="corporate.html">นิติบุคคล</a>
+    <a href="vat.html">VAT</a>
+    <a href="business.html">ธุรกิจ</a>
+</nav>
+
+<div class="container">
+<div class="card">
+
+<h2>🧮 เครื่องคำนวณภาษีมูลค่าเพิ่ม</h2>
+
+<p>คำนวณ VAT จากราคาสินค้าหรือบริการเบื้องต้น</p>
+
+<label for="amount">ราคาก่อน VAT (บาท)</label>
+
+<input
+    type="number"
+    id="amount"
+    placeholder="เช่น 10000"
+    min="0"
+>
+
+<button onclick="calculateVAT()">คำนวณ VAT</button>
+
+<div id="result">
+    กรอกราคาแล้วกด “คำนวณ VAT”
+</div>
+
+<div class="note">
+    * ใช้อัตรา VAT 7% สำหรับการประมาณการเบื้องต้น
+    และจัดทำขึ้นเพื่อการศึกษา
+</div>
+
+</div>
+</div>
+
+<script>
+function calculateVAT() {
+
+    const amount = Number(document.getElementById("amount").value);
+    const result = document.getElementById("result");
+
+    if (amount < 0 || isNaN(amount)) {
+        result.innerHTML = "กรุณากรอกราคาให้ถูกต้อง";
+        return;
+    }
+
+    const vat = amount * 0.07;
+    const total = amount + vat;
+
+    result.innerHTML = `
+        <h3>ผลการคำนวณ</h3>
+
+        <p>
+            ราคาก่อน VAT:
+            <strong>${amount.toLocaleString()} บาท</strong>
+        </p>
+
+        <p>
+            VAT 7%:
+            <strong>${vat.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })} บาท</strong>
+        </p>
+
+        <p style="font-size:22px;">
+            ราคารวม VAT:
+            <strong>${total.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })} บาท</strong>
+        </p>
+    `;
+}
+</script>
+
+</body>
+</html>
