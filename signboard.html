@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ภาษีป้าย | AI Tax Assistant</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,"Noto Sans Thai",sans-serif;
+  background:linear-gradient(135deg,#fff7ed,#fef3c7);
+  color:#3b2a1a;
+}
+
+header{
+  background:linear-gradient(135deg,#d97706,#f59e0b);
+  color:white;
+  text-align:center;
+  padding:32px 20px;
+}
+
+header h1{
+  margin:0 0 8px;
+  font-size:30px;
+}
+
+header p{
+  margin:0;
+}
+
+.container{
+  max-width:760px;
+  margin:30px auto;
+  padding:0 18px;
+}
+
+.card{
+  background:white;
+  border-radius:18px;
+  padding:28px;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+h2{
+  margin-top:0;
+  color:#c26100;
+}
+
+label{
+  display:block;
+  margin-top:18px;
+  margin-bottom:7px;
+  font-weight:bold;
+}
+
+input,select{
+  width:100%;
+  padding:13px;
+  border:1px solid #ddd0bd;
+  border-radius:10px;
+  font-size:16px;
+}
+
+button{
+  width:100%;
+  margin-top:22px;
+  padding:14px;
+  border:0;
+  border-radius:10px;
+  background:#d97706;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#b45309;
+}
+
+.result{
+  display:none;
+  margin-top:22px;
+  padding:20px;
+  background:#fff7ed;
+  border-radius:12px;
+  line-height:1.7;
+}
+
+.result strong{
+  color:#c26100;
+  font-size:22px;
+}
+
+.info{
+  margin-top:22px;
+  padding:16px;
+  background:#fff8e6;
+  border-left:5px solid #f59e0b;
+  border-radius:8px;
+  line-height:1.7;
+}
+
+.back{
+  display:inline-block;
+  margin-top:20px;
+  color:#b45309;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+footer{
+  text-align:center;
+  padding:25px;
+  color:#776b5d;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🏷️ ภาษีป้าย</h1>
+  <p>AI Tax Assistant • เครื่องมือคำนวณเบื้องต้นเพื่อการศึกษา</p>
+</header>
+
+<div class="container">
+  <div class="card">
+
+    <h2>คำนวณภาษีป้ายเบื้องต้น</h2>
+
+    <label for="area">พื้นที่ป้าย (ตารางเซนติเมตร)</label>
+    <input
+      type="number"
+      id="area"
+      min="0"
+      placeholder="เช่น 1000"
+    >
+
+    <label for="type">ประเภทป้าย</label>
+    <select id="type">
+      <option value="thai">ป้ายอักษรไทย</option>
+      <option value="mixed">ป้ายอักษรไทย + ภาษาต่างประเทศ</option>
+      <option value="foreign">ป้ายอักษรต่างประเทศ</option>
+    </select>
+
+    <button onclick="calculateSignTax()">
+      🧮 คำนวณภาษี
+    </button>
+
+    <div class="result" id="result"></div>
+
+    <div class="info">
+      <strong>หมายเหตุ</strong><br>
+      ผลลัพธ์นี้เป็นการประมาณเพื่อการศึกษาเท่านั้น
+      การคำนวณภาษีป้ายจริงต้องพิจารณาหลักเกณฑ์
+      ขนาด ลักษณะ และข้อความบนป้ายตามกฎหมายที่เกี่ยวข้อง
+    </div>
+
+    <a class="back" href="index.html">
+      ← กลับหน้าหลัก AI Tax Assistant
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  AI Tax Assistant • โครงงานเพื่อการศึกษา
+</footer>
+
+<script>
+function calculateSignTax(){
+
+  const area = Number(document.getElementById("area").value);
+  const type = document.getElementById("type").value;
+  const result = document.getElementById("result");
+
+  if(!area || area <= 0){
+    result.style.display="block";
+    result.innerHTML="⚠️ กรุณากรอกพื้นที่ป้ายให้ถูกต้อง";
+    return;
+  }
+
+  let rate = 0.003;
+
+  if(type === "mixed"){
+    rate = 0.005;
+  }
+
+  if(type === "foreign"){
+    rate = 0.007;
+  }
+
+  const tax = area * rate;
+
+  result.style.display="block";
+
+  result.innerHTML =
+    "💰 ภาษีป้ายโดยประมาณ<br><br>" +
+    "<strong>" +
+    tax.toLocaleString("th-TH",{
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    }) +
+    " บาท</strong><br><br>" +
+    "พื้นที่ป้าย: " +
+    area.toLocaleString("th-TH") +
+    " ตารางเซนติเมตร";
+}
+</script>
+
+</body>
+</html>
