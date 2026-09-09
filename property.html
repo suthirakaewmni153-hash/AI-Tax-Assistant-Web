@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ภาษีที่ดินและสิ่งปลูกสร้าง | AI Tax Assistant</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, "Noto Sans Thai", sans-serif;
+  background: linear-gradient(135deg, #eef6ff, #f8fbff);
+  color: #17324d;
+}
+
+header {
+  background: linear-gradient(135deg, #1769aa, #2980d9);
+  color: white;
+  text-align: center;
+  padding: 32px 20px;
+}
+
+header h1 {
+  margin: 0 0 8px;
+  font-size: 30px;
+}
+
+header p {
+  margin: 0;
+  opacity: 0.95;
+}
+
+.container {
+  max-width: 760px;
+  margin: 30px auto;
+  padding: 0 18px;
+}
+
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+h2 {
+  margin-top: 0;
+  color: #1769aa;
+}
+
+label {
+  display: block;
+  margin-top: 18px;
+  margin-bottom: 7px;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ccd9e5;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  margin-top: 22px;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #1769aa;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #125487;
+}
+
+.result {
+  margin-top: 22px;
+  padding: 20px;
+  background: #eef7ff;
+  border-radius: 12px;
+  display: none;
+}
+
+.result strong {
+  color: #1769aa;
+  font-size: 22px;
+}
+
+.info {
+  margin-top: 22px;
+  padding: 16px;
+  background: #fff8e6;
+  border-left: 5px solid #f0ad00;
+  border-radius: 8px;
+  line-height: 1.7;
+}
+
+.back {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #1769aa;
+  font-weight: bold;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #667788;
+  font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🏠 ภาษีที่ดินและสิ่งปลูกสร้าง</h1>
+  <p>AI Tax Assistant • เครื่องมือคำนวณเบื้องต้นเพื่อการศึกษา</p>
+</header>
+
+<div class="container">
+  <div class="card">
+
+    <h2>คำนวณภาษีเบื้องต้น</h2>
+
+    <label for="propertyValue">มูลค่าที่ดินและสิ่งปลูกสร้าง (บาท)</label>
+    <input
+      type="number"
+      id="propertyValue"
+      placeholder="เช่น 1000000"
+      min="0"
+    >
+
+    <label for="propertyType">ประเภทการใช้ประโยชน์</label>
+    <select id="propertyType">
+      <option value="home">ที่อยู่อาศัย</option>
+      <option value="business">ประกอบกิจการ</option>
+      <option value="other">ประเภทอื่น ๆ</option>
+    </select>
+
+    <button onclick="calculatePropertyTax()">
+      🧮 คำนวณภาษี
+    </button>
+
+    <div class="result" id="result"></div>
+
+    <div class="info">
+      <strong>หมายเหตุ</strong><br>
+      เครื่องมือนี้เป็นการคำนวณโดยประมาณเพื่อการศึกษา
+      อัตราภาษีจริงอาจแตกต่างกันตามประเภททรัพย์สิน
+      มูลค่าฐานภาษี และหลักเกณฑ์ที่กฎหมายกำหนด
+    </div>
+
+    <a class="back" href="index.html">
+      ← กลับหน้าหลัก AI Tax Assistant
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  AI Tax Assistant • โครงงานเพื่อการศึกษา
+</footer>
+
+<script>
+function calculatePropertyTax() {
+  const value = Number(document.getElementById("propertyValue").value);
+  const type = document.getElementById("propertyType").value;
+  const result = document.getElementById("result");
+
+  if (!value || value < 0) {
+    result.style.display = "block";
+    result.innerHTML = "⚠️ กรุณากรอกมูลค่าทรัพย์สินให้ถูกต้อง";
+    return;
+  }
+
+  let rate = 0.001;
+
+  if (type === "business") {
+    rate = 0.003;
+  } else if (type === "other") {
+    rate = 0.005;
+  }
+
+  const tax = value * rate;
+
+  result.style.display = "block";
+  result.innerHTML =
+    "💰 ภาษีโดยประมาณ<br><br>" +
+    "<strong>" +
+    tax.toLocaleString("th-TH", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }) +
+    " บาท</strong><br><br>" +
+    "อัตราที่ใช้ในการสาธิต: " +
+    (rate * 100).toFixed(2) +
+    "%";
+}
+</script>
+
+</body>
+</html>
